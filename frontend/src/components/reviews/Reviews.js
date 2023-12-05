@@ -18,31 +18,33 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
     const addReview = async (e) => {
         e.preventDefault();
         const rev = revText.current;
-        try {
-            const response = await api.post("/api/v1/reviews", {reviewBody: rev.value, imdbId: movieId});
-            const updatedReviews = [...reviews, {body: rev.value}];
-            rev.value = "";
-            setReviews(updatedReviews);
-        } catch(err) {
-            console.error(err);
+        if (rev.value.trim().length > 0) {
+            try {
+                const response = await api.post("/api/v1/reviews", { reviewBody: rev.value, imdbId: movieId });
+                const updatedReviews = reviews != null ? [...reviews, { body: rev.value }] : [{ body: rev.value }];
+                rev.value = "";
+                setReviews(updatedReviews);
+            } catch(err) {
+                console.error(err);
+            }
         }
     }
 
     return (
         <Container>
-            <Row>
+            <Row className="mt-4">
                 <Col><h3>Reviews</h3></Col>
             </Row>
             <Row className="mt-2">
                 <Col>
-                    <img src={movie?.poster} alt="" />
+                    <img src={movie?.poster} alt=""/>
                 </Col>
                 <Col>
                     {
                         <>
                             <Row>
                                 <Col>
-                                    <ReviewForm handleSubmit={addReview} revText={revText} labelText = "Write a Review?"/>  
+                                    <ReviewForm handleSubmit={addReview} revText={revText} labelText = "Write a Review?"/>
                                 </Col>
                             </Row>
                             <Row>
@@ -52,25 +54,33 @@ const Reviews = ({ getMovieData, movie, reviews, setReviews }) => {
                             </Row>
                         </>
                     }
-                    {
-                        reviews?.map((r) => {
-                            return(
-                                <>
-                                    <Row>
-                                        <Col>{r.body}</Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <hr/>
-                                        </Col>
-                                    </Row>                                
-                                </>
-                            )
-                        })
+                    {   
+                        reviews && reviews.length > 0 ? (
+                            reviews?.map((r) => {
+                                return(
+                                    <>
+                                        <Row>
+                                            <Col>{r.body}</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <hr/>
+                                            </Col>
+                                        </Row>                                
+                                    </>
+                                )
+                            })
+                        ) : (
+                            <>
+                                <Row>
+                                    <Col>No reviews yet.</Col>
+                                </Row> 
+                            </>
+                        )
                     }
                 </Col>
             </Row>
-            <Row>
+            <Row className="mt-4">
                 <Col>
                     <hr/>
                 </Col>
