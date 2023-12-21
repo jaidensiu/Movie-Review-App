@@ -29,10 +29,8 @@ A web application for users to watch movie trailers, and read and write movie re
 - I am proud of quickly learning how to implement a REST API using Java and Spring Boot
 - I am proud of implementing a dynamic and aesthetic frontend using React and Bootstrap
 
-## Backend Architecture
-![Architecture](./images/controller_service_repository.webp)
-
 ## Resources
+- https://developer.themoviedb.org/docs
 - https://start.spring.io/
 - https://ngrok.com/docs/
 - https://react.dev/reference/react
